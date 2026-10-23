@@ -1,0 +1,13 @@
+[package]
+name = "demo-gallery"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+uwp-reactor = { path = "../../crates/uwp-reactor" }
+
+[[bin]]
+name = "demo-gallery"
+path = "src/main.rs"

@@ -1,0 +1,11 @@
+[package]
+name = "uwp-reactor"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "A compact declarative app API backed by the latest Windows Reactor"
+publish = false
+
+[dependencies]
+windows-core = { workspace = true }
+windows-reactor = { workspace = true }
