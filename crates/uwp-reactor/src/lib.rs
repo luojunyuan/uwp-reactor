@@ -1,64 +1,50 @@
-//! A small application API over the current Windows Reactor runtime.
-//!
-//! The runtime and controls are sourced from the `reference/windows-rs` submodule so the
-//! workspace builds against one pinned Windows API revision.
-
 mod app;
+mod component;
+pub mod controls;
+pub mod declaration;
+mod ir;
+pub mod native;
+mod reconcile;
+pub mod window;
+
+#[allow(
+    non_snake_case,
+    non_upper_case_globals,
+    non_camel_case_types,
+    dead_code,
+    clippy::upper_case_acronyms,
+    clippy::useless_transmute,
+    clippy::missing_transmute_annotations,
+    clippy::missing_safety_doc,
+    clippy::too_many_arguments
+)]
+pub mod projection {
+    include!(concat!(env!("OUT_DIR"), "/windows_ui_xaml.rs"));
+}
 
 pub mod application {
-    pub use windows_reactor::{
-        Application, ApplicationContext, ApplicationView, ApplicationViewContext,
-    };
+    pub use crate::component::{Component, ComponentContext, ViewContext};
 }
 
-pub mod component {
-    pub use windows_reactor::{
-        CancellationToken, Component, ComponentCompletion, ComponentContext, ComponentSender,
-        ComponentTask, ComponentTimer, Context, EffectKey, LocalSender, ViewContext, component,
-        provide,
-    };
-}
-
-pub mod controls {
-    pub use windows_reactor::{
-        AppBarButton, AppBarSeparator, Border, Button, CheckBox, ComboBox, ContentDialog, Grid,
-        HyperlinkButton, NavigationView, NumberBox, ProgressBar, ScrollView, Slider, StackPanel,
-        TextBlock, TextBox, ToggleSwitch, View,
-    };
-}
-
-pub mod declaration {
-    pub use windows_reactor::{IntoViews, Key, KeyedView, View, keyed};
-}
-
-pub mod window {
-    pub use windows_reactor::{WindowHandle, WindowTitleBarHeight};
-}
-
-pub mod native {
-    pub use windows_reactor::{AppCallback, AppContext, AppProxy, ScreenPoint};
-}
-
-pub mod reconcile {
-    pub use windows_reactor::{AnyElement, CompatibleElementRef, ElementRef, ReferenceElement};
-}
-
-pub mod runtime {
-    pub use windows_reactor::*;
+pub mod xaml {
+    pub use crate::projection::*;
 }
 
 pub mod prelude {
-    pub use crate::application::*;
-    pub use crate::component::*;
+    pub use crate::application::{Component, ComponentContext, ViewContext};
     pub use crate::controls::{
-        Button, CheckBox, ProgressBar, Slider, StackPanel, TextBlock, TextBox, ToggleSwitch, View,
+        Button, CheckBox, Orientation, ProgressBar, Slider, StackPanel, TextBlock, TextBox,
+        ToggleSwitch,
     };
+    pub use crate::declaration::{IntoViews, View};
     pub use crate::{App, Error, Result};
 }
 
 pub use app::App;
-pub use component::{Component, ComponentContext, ViewContext};
+pub use component::{Callback, Component, ComponentContext, ViewContext};
 pub use controls::{
-    Button, CheckBox, ProgressBar, Slider, StackPanel, TextBlock, TextBox, ToggleSwitch, View,
+    Button, CheckBox, Orientation, ProgressBar, Slider, StackPanel, TextBlock, TextBox,
+    ToggleSwitch,
 };
+pub use declaration::{IntoViews, View};
 pub use windows_core::{Error, Result};

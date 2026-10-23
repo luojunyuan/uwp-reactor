@@ -9,8 +9,12 @@ edition = "2024"
 license = "MIT OR Apache-2.0"
 
 [workspace.dependencies]
+windows-collections = { path = "reference/windows-rs/crates/libs/collections" }
 windows-core = { path = "reference/windows-rs/crates/libs/core" }
-windows-reactor = { path = "reference/windows-rs/crates/libs/reactor" }
+windows-future = { path = "reference/windows-rs/crates/libs/future" }
+windows-numerics = { path = "reference/windows-rs/crates/libs/numerics" }
+windows-reference = { path = "reference/windows-rs/crates/libs/reference" }
+windows-time = { path = "reference/windows-rs/crates/libs/time" }
 
 [profile.release]
 strip = true

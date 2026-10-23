@@ -48,8 +48,24 @@ checksum = "a2c754d6c33795a1c324727428e5a7dedb5b06195f9890bdbcba760d3e246563"
 name = "uwp-reactor"
 version = "0.1.0"
 dependencies = [
+ "windows-bindgen",
+ "windows-collections",
  "windows-core",
- "windows-reactor",
+ "windows-future",
+ "windows-numerics",
+ "windows-rdl",
+ "windows-reference",
+ "windows-time",
+]
+
+[[package]]
+name = "windows-bindgen"
+version = "0.100.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "windows-default",
+ "windows-metadata",
 ]
 
 [[package]]
@@ -69,6 +85,10 @@ dependencies = [
  "windows-result",
  "windows-strings",
 ]
+
+[[package]]
+name = "windows-default"
+version = "0.100.0"
 
 [[package]]
 name = "windows-future"
@@ -102,16 +122,25 @@ name = "windows-link"
 version = "0.100.0"
 
 [[package]]
-name = "windows-reactor"
+name = "windows-metadata"
+version = "0.100.0"
+
+[[package]]
+name = "windows-numerics"
 version = "0.100.0"
 dependencies = [
- "windows-collections",
  "windows-core",
- "windows-future",
- "windows-reference",
- "windows-threading",
- "windows-time",
- "windows-window",
+]
+
+[[package]]
+name = "windows-rdl"
+version = "0.100.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+ "windows-default",
+ "windows-metadata",
 ]
 
 [[package]]
@@ -145,13 +174,6 @@ dependencies = [
 
 [[package]]
 name = "windows-time"
-version = "0.100.0"
-dependencies = [
- "windows-core",
-]
-
-[[package]]
-name = "windows-window"
 version = "0.100.0"
 dependencies = [
  "windows-core",

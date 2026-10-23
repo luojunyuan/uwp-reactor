@@ -1,0 +1,31 @@
+Windows::Foundation::PropertyValue::CreateString
+Windows::UI::Xaml::Application::Start
+Windows::UI::Xaml::ApplicationInitializationCallback
+Windows::UI::Xaml::IApplicationFactory::CreateInstance
+Windows::UI::Xaml::IApplicationOverrides
+Windows::UI::Xaml::UIElement
+Windows::UI::Xaml::Window::Current
+Windows::UI::Xaml::IWindow::{Activate, Close, Content}
+Windows::UI::Xaml::Controls::Button::CreateInstance
+Windows::UI::Xaml::Controls::CheckBox::CreateInstance
+Windows::UI::Xaml::Controls::ProgressBar::CreateInstance
+Windows::UI::Xaml::Controls::Slider::CreateInstance
+Windows::UI::Xaml::Controls::ISlider::StepFrequency
+Windows::UI::Xaml::Controls::StackPanel::CreateInstance
+Windows::UI::Xaml::Controls::TextBlock::CreateInstance
+Windows::UI::Xaml::Controls::TextBox::CreateInstance
+Windows::UI::Xaml::Controls::ToggleSwitch::CreateInstance
+Windows::UI::Xaml::Controls::Orientation
+Windows::UI::Xaml::Controls::IPanel::Children
+Windows::UI::Xaml::Controls::IContentControl::Content
+Windows::UI::Xaml::Controls::IStackPanel::Orientation
+Windows::UI::Xaml::Controls::IStackPanel4::Spacing
+Windows::UI::Xaml::Controls::ITextBlock::{FontSize, Text}
+Windows::UI::Xaml::Controls::ITextBox::{Text, TextChanged}
+Windows::UI::Xaml::Controls::ITextBox2::PlaceholderText
+Windows::UI::Xaml::Controls::IToggleSwitch::{Header, IsOn, Toggled}
+Windows::UI::Xaml::Controls::TextChangedEventArgs
+Windows::UI::Xaml::Controls::Primitives::IButtonBase::Click
+Windows::UI::Xaml::Controls::Primitives::IRangeBase::{Maximum, Minimum, Value, ValueChanged}
+Windows::UI::Xaml::Controls::Primitives::IToggleButton::{Checked, IsChecked, Unchecked}
+Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs::NewValue

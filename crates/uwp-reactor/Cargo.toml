@@ -3,9 +3,17 @@ name = "uwp-reactor"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "A compact declarative app API backed by the latest Windows Reactor"
+description = "A declarative UWP UI runtime with generated Windows.UI.Xaml projections"
 publish = false
 
 [dependencies]
+windows-collections = { workspace = true, features = ["std"] }
 windows-core = { workspace = true }
-windows-reactor = { workspace = true }
+windows-future = { workspace = true, features = ["std"] }
+windows-numerics = { workspace = true }
+windows-reference = { workspace = true, features = ["std"] }
+windows-time = { workspace = true }
+
+[build-dependencies]
+windows-bindgen = { path = "../../reference/windows-rs/crates/libs/bindgen" }
+windows-rdl = { path = "../../reference/windows-rs/crates/libs/rdl" }
