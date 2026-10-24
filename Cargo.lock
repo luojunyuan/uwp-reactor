@@ -10,6 +10,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "helloworld"
+version = "0.1.0"
+dependencies = [
+ "uwp-reactor",
+]
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.107"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -48,12 +55,25 @@ checksum = "a2c754d6c33795a1c324727428e5a7dedb5b06195f9890bdbcba760d3e246563"
 name = "uwp-reactor"
 version = "0.1.0"
 dependencies = [
+ "windows",
  "windows-bindgen",
  "windows-collections",
  "windows-core",
  "windows-future",
  "windows-numerics",
  "windows-rdl",
+ "windows-reference",
+ "windows-time",
+]
+
+[[package]]
+name = "windows"
+version = "0.100.0"
+dependencies = [
+ "windows-collections",
+ "windows-core",
+ "windows-future",
+ "windows-numerics",
  "windows-reference",
  "windows-time",
 ]

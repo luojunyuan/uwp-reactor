@@ -1,0 +1,5 @@
+[build]
+target = "aarch64-uwp-windows-msvc"
+
+[unstable]
+build-std = ["std", "panic_abort"]

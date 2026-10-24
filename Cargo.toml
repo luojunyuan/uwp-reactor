@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/uwp-reactor", "examples/demo-gallery"]
+members = ["crates/uwp-reactor", "examples/demo-gallery", "examples/helloworld"]
 exclude = ["reference/windows-rs"]
 resolver = "3"
 

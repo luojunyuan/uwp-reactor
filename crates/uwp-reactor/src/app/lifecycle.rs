@@ -12,64 +12,60 @@ use crate::xaml::{
     WindowCreatedEventArgs,
 };
 use crate::{Error, Result};
+use windows::Win32::{
+    combaseapi::{CoInitializeEx, CoUninitialize},
+    objbase::COINIT_MULTITHREADED,
+};
 use windows_core::{Ref, implement};
 
-type ApplicationFactory = Box<dyn FnOnce() -> Result<Application>>;
+struct MtaApartment(PhantomData<Rc<()>>);
+
+impl MtaApartment {
+    fn init() -> Result<Self> {
+        unsafe {
+            CoInitializeEx(None, COINIT_MULTITHREADED as u32).ok()?;
+        }
+        Ok(Self(PhantomData))
+    }
+}
+
+impl Drop for MtaApartment {
+    fn drop(&mut self) {
+        unsafe { CoUninitialize() };
+    }
+}
 
 thread_local! {
     static APPLICATION_RUNNING: Cell<bool> = const { Cell::new(false) };
-    static APPLICATION_FACTORY: RefCell<Option<ApplicationFactory>> = const { RefCell::new(None) };
-    static APPLICATION_INSTANCE: RefCell<Option<Application>> = const { RefCell::new(None) };
-    static STARTUP_ERROR: RefCell<Option<Error>> = const { RefCell::new(None) };
 }
 
 pub(crate) fn start<C: Component>(input: C::Input) -> Result<()> {
-    let _apartment = windows_core::init_sta()?;
+    let _apartment = MtaApartment::init()?;
     if APPLICATION_RUNNING.with(|running| running.replace(true)) {
         return Err(Error::new(
             windows_core::HRESULT(0x80004005u32 as i32),
             "an application is already running on this thread",
         ));
     }
-    APPLICATION_INSTANCE.with(|application| application.replace(None));
-    STARTUP_ERROR.with(|error| error.replace(None));
 
-    let previous = APPLICATION_FACTORY.with(|factory| {
-        factory.replace(Some(Box::new(move || {
-            Application::compose(UwpApplication::<C>::new(input))
-        })))
-    });
-    if previous.is_some() {
-        APPLICATION_FACTORY.with(|factory| factory.replace(previous));
-        APPLICATION_RUNNING.with(|running| running.set(false));
-        return Err(Error::new(
-            windows_core::HRESULT(0x80004005u32 as i32),
-            "an application is already starting on this thread",
-        ));
-    }
-
-    let callback = ApplicationInitializationCallback::new(|_| {
-        let result = APPLICATION_FACTORY.with(|factory| {
-            let factory = factory
-                .borrow_mut()
-                .take()
-                .ok_or_else(crate::native::startup_error)?;
-            factory()
-        });
+    let input = RefCell::new(Some(input));
+    let startup_error = Rc::new(RefCell::new(None));
+    let callback_error = Rc::clone(&startup_error);
+    let callback = ApplicationInitializationCallback::new(move |_| {
+        let input = input.borrow_mut().take();
+        let result = input
+            .ok_or_else(crate::native::startup_error)
+            .and_then(|input| Application::compose(UwpApplication::<C>::new(input)).map(|_| ()));
         match result {
-            Ok(application) => {
-                APPLICATION_INSTANCE.with(|instance| instance.replace(Some(application)));
-            }
+            Ok(()) => {}
             Err(error) => {
-                STARTUP_ERROR.with(|startup_error| startup_error.replace(Some(error)));
+                callback_error.borrow_mut().replace(error);
             }
         }
     });
     let start_result = Application::Start(&callback);
-    APPLICATION_FACTORY.with(|factory| drop(factory.borrow_mut().take()));
-    APPLICATION_INSTANCE.with(|application| drop(application.borrow_mut().take()));
     APPLICATION_RUNNING.with(|running| running.set(false));
-    if let Some(error) = STARTUP_ERROR.with(|startup_error| startup_error.borrow_mut().take()) {
+    if let Some(error) = startup_error.borrow_mut().take() {
         return Err(error);
     }
     start_result
