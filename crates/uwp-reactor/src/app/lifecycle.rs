@@ -95,6 +95,15 @@ impl<C: Component> IApplicationOverrides_Impl for UwpApplication_Impl<C> {
     }
 
     fn OnLaunched(&self, _: Ref<LaunchActivatedEventArgs>) -> Result<()> {
+        let existing_window = self
+            .runtime
+            .borrow()
+            .as_ref()
+            .map(|runtime| runtime.borrow().window.clone());
+        if let Some(window) = existing_window {
+            return window.activate();
+        }
+
         let input = self
             .input
             .borrow_mut()

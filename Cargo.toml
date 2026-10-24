@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/uwp-reactor", "examples/demo-gallery", "examples/helloworld"]
+members = ["crates/uwp-reactor", "examples/demo-gallery"]
 exclude = ["reference/windows-rs"]
 resolver = "3"
 
@@ -9,10 +9,14 @@ edition = "2024"
 license = "MIT OR Apache-2.0"
 
 [workspace.dependencies]
+uwp-reactor = { path = "crates/uwp-reactor" }
+windows = { path = "reference/windows-rs/crates/libs/windows" }
+windows-bindgen = { path = "reference/windows-rs/crates/libs/bindgen" }
 windows-collections = { path = "reference/windows-rs/crates/libs/collections" }
 windows-core = { path = "reference/windows-rs/crates/libs/core" }
 windows-future = { path = "reference/windows-rs/crates/libs/future" }
 windows-numerics = { path = "reference/windows-rs/crates/libs/numerics" }
+windows-rdl = { path = "reference/windows-rs/crates/libs/rdl" }
 windows-reference = { path = "reference/windows-rs/crates/libs/reference" }
 windows-time = { path = "reference/windows-rs/crates/libs/time" }
 

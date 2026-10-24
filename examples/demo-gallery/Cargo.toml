@@ -6,7 +6,7 @@ license.workspace = true
 publish = false
 
 [dependencies]
-uwp-reactor = { path = "../../crates/uwp-reactor" }
+uwp-reactor = { workspace = true }
 
 [[bin]]
 name = "demo-gallery"

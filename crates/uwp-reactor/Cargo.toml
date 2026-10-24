@@ -7,7 +7,7 @@ description = "A declarative UWP UI runtime with generated Windows.UI.Xaml proje
 publish = false
 
 [dependencies]
-windows = { path = "../../reference/windows-rs/crates/libs/windows", default-features = false, features = ["combaseapi", "objbase"] }
+windows = { workspace = true, default-features = false, features = ["combaseapi", "objbase"] }
 windows-collections = { workspace = true, features = ["std"] }
 windows-core = { workspace = true }
 windows-future = { workspace = true, features = ["std"] }
@@ -16,5 +16,5 @@ windows-reference = { workspace = true, features = ["std"] }
 windows-time = { workspace = true }
 
 [build-dependencies]
-windows-bindgen = { path = "../../reference/windows-rs/crates/libs/bindgen" }
-windows-rdl = { path = "../../reference/windows-rs/crates/libs/rdl" }
+windows-bindgen = { workspace = true }
+windows-rdl = { workspace = true }
